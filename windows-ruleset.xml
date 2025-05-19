@@ -1,0 +1,368 @@
+<!-- core util ruleset -->
+<rule id="100100" level="0">
+  <field name="data.win.eventdata.elevatedToken">yes</field>
+  <description>Parent rule for privil events rules.</description>
+</rule>
+
+<!-- #################### Windows User Logon Events #################### -->
+
+<!-- ########## Successful Logon ########## -->
+
+<rule id="100101" level="4">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*2</match>
+  <description>Successful Physical Interactive Logon</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100102" level="12">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*4</match>
+  <description>Successful Batch Logon On Behalf Of A User</description>
+  <mitre>
+    <id>T1569</id>
+    <id>T1053</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100103" level="3">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*5</match>
+  <description>A service was started by the Service Control Manager</description>
+  <mitre>
+    <id>T1569</id>
+    <id>T1053</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100104" level="3">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*7</match>
+  <description>This workstation was unlocked</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100105" level="13">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*8</match>
+  <description>The user's password was passed to the authentication package in cleartext form</description>
+  <mitre>
+    <id>T1569</id>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100106" level="12">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*9</match>
+  <description>Windows Logon using New Credentials (RunAs /netonly)</description>
+  <mitre>
+    <id>T1569</id>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100107" level="10">
+  <if_sid>18107</if_sid>
+  <match>Logon Type:\s*10</match>
+  <description>Successful RDP Interactive Logon</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100108" level="10">
+  <if_sid>18119</if_sid>
+  <description>First time this privileged user logged in this system</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,</group>
+</rule>
+
+<rule id="100109" level="10">
+  <if_sid>18119</if_sid>
+  <description>First time this privileged user logged in this system</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+
+<!-- ########## Privileged User Successful Logon ########## -->
+
+<rule id="100110" level="14">
+  <if_sid>100101,100100</if_sid>
+  <description>Successful Physical Interactive Logon As Privileged User</description>
+  <mitre>
+    <id>T1078</id>
+    <id>T1668</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<rule id="100111" level="14">
+  <if_sid>100102,100100</if_sid>
+  <description>Successful Batch Logon On Behalf Of A Privileged User</description>
+  <mitre>
+    <id>T1068</id>
+    <id>T1569</id>
+    <id>T1053</id>
+  </mitre>
+  <group>windows,authentication_success,Privileged,</group>
+</rule>
+
+<rule id="100112" level="4">
+  <if_sid>100103,100100</if_sid>
+  <description>A service was started by the Service Control Manager With Privileged Access</description>
+  <mitre>
+    <id>T1068</id>
+    <id>T1569</id>
+    <id>T1053</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<rule id="100113" level="4">
+  <if_sid>100104,100100</if_sid>
+  <description>This Admin workstation was unlocked</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<rule id="100114" level="14">
+  <if_sid>100105,100100</if_sid>
+  <description>The Admin user's password was passed to the authentication package in cleartext form</description>
+  <mitre>
+    <id>T1078</id>
+    <id>T1569</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<rule id="100115" level="9">
+  <if_sid>100106,100100</if_sid>
+  <description>Windows Logon using Privileged New Credentials (RunAs /netonly)</description>
+  <mitre>
+    <id>T1078</id>
+    <id>T1134</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<rule id="100116" level="12">
+  <if_sid>100107,100100</if_sid>
+  <description>Successful RDP Interactive Logon With Privileged Account</description>
+  <mitre>
+    <id>T1078</id>
+    <tactic>Persistence</tactic>
+  </mitre>
+  <group>windows,authentication_success,persistence,privileged,</group>
+</rule>
+
+<rule id="100117" level="10">
+  <if_sid>18119,100100</if_sid>
+  <description>First time this privileged user logged in this system</description>
+  <mitre>
+    <id>T1078</id>
+  </mitre>
+  <group>windows,authentication_success,privileged,</group>
+</rule>
+
+<!-- ########## Failed Logon ########## -->
+<rule id="100118" level="10">
+  <if_sid>18107</if_sid> <!-- Event ID 4625 -->
+  <description>Windows Failed Logon Attempt</description>
+  <mitre>
+    <id>T1110</id>
+  </mitre>
+  <group>windows,authentication_failed,</group>
+</rule>
+
+<!-- ########## Failed Logon Attempts ########## -->
+<rule id="100119" level="6" frequency="3" timeframe="60" override="false">
+    <if_sid>100115</if_sid>
+    <same_user/>
+    <description>More than 3 failed login attempts by the same user in 60 seconds</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>authentication_failed, brute_force,</group>
+  </rule>
+
+<rule id="100120" level="7" frequency="5" timeframe="60" override="false">
+    <if_sid>100115</if_sid>
+    <same_user/>
+    <description>More than 5 failed login attempts by the same user in 60 seconds</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>authentication_failed, brute_force,</group>
+  </rule>
+
+<rule id="100121" level="8" frequency="10" timeframe="60" override="false">
+    <if_sid>100115</if_sid>
+    <same_user/>
+    <description>More than 10 failed login attempts by the same user in 60 seconds</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>authentication_failed, brute_force,</group>
+  </rule>
+
+<rule id="100122" level="12" frequency="12" timeframe="60" override="false">
+    <if_sid>100115</if_sid>
+    <same_user/>
+    <description>More than 12 failed login attempts by the same user in 60 seconds</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>authentication_failed, brute_force,</group>
+  </rule>
+
+
+<!-- #################### Windows Account management Events #################### -->
+
+<rule id="100123" level="13">
+  <if_sid>18110</if_sid>
+  <id>^624$|^4720$</id>
+  <description>New User Account Created</description>
+  <mitre>
+    <id>T1136</id>
+  </mitre>
+  <group>windows,account_changed,adduser,</group>
+</rule>
+
+<rule id="100124" level="13">
+  <if_sid>18110</if_sid>
+  <id>^626$|^4722$</id>
+  <description>User Account Enabled</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100125" level="13">
+  <if_sid>18111</if_sid>
+  <id>^628$</id>
+  <description>User attempt to reset an account's password</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100126" level="13">
+  <if_sid>18111</if_sid>
+  <id>^685$|^4738$|^4781$</id>
+  <description>User Account Changed</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100127" level="13">
+  <if_sid>18112</if_sid>
+  <id>^630$|^4726$</id>
+  <description>User Account deleted.</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100128" level="13">
+  <if_sid>18112</if_sid>
+  <id>^629$|^4725$</id>
+  <description>User Account disabled.</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100129" level="14">
+  <if_sid>18107</if_sid>
+  <match>Group Name:\s*Domain Admins</match>
+  <description>User Added to Domain Admins Group</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,privilege_escalation,persistence,</group>
+</rule>
+
+<rule id="100130" level="14">
+  <if_sid>18127</if_sid>
+  <id>^646$|^4742$</id>
+  <description>Windows: Computer account changed.</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100131" level="14">
+  <if_sid>18127</if_sid>
+  <id>^645$|^4741$</id>
+  <description>Windows: Computer account added.</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100132" level="14">
+  <if_sid>18127</if_sid>
+  <id>^647$|^4743$</id>
+  <description>Windows: Computer account deleted.</description>
+  <mitre>
+    <id>T1098</id>
+  </mitre>
+  <group>windows,account_changed,</group>
+</rule>
+
+<rule id="100133" level="15">
+  <if_sid>18107</if_sid>
+  <description>Audit Log Cleared</description>
+  <mitre>
+    <id>T1070.001</id>
+  </mitre>
+  <group>windows,log_integrity,</group>
+</rule>
+
+<rule id="100134" level="13">
+  <if_sid>18107</if_sid>
+  <description>Service Installed on System</description>
+  <mitre>
+    <id>T1071</id>
+  </mitre>
+  <group>windows,service_creation,</group>
+</rule>
+
+
+<!-- #################### Windows operation management Events #################### -->
+
+<!-- #################### Windows operation management Events #################### -->
+
+<!-- #################### Windows operation management Events #################### -->
+
+<!-- #################### Windows operation management Events #################### -->
+
+<!-- #################### Windows operation management Events #################### -->
+
