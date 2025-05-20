@@ -1,0 +1,202 @@
+<group name="vmware-esxi-syslog,">
+  <rule id="111010" level="0">
+    <decoded_as>vmware-esxi</decoded_as>
+    <description>VMware ESXi syslogs grouped.</description>
+  </rule>
+
+  <!-- create new virtual machines -->
+  <rule id="111011" level="5">
+    <if_sid>111010</if_sid>
+    <match>Created virtual machine</match>
+    <description>VMware ESXi: A new VM $(vm) was created on $(esxi_host).</description>
+  </rule>
+
+  <!-- virtual machines state changes -->
+  <rule id="111012" level="3">
+    <if_sid>111010</if_sid>
+    <match>has powered on</match>
+    <description>VMware ESXi: VM $(vm) on $(esxi_host) has powered on.</description>
+  </rule>
+
+  <rule id="111013" level="8">
+    <if_sid>111010</if_sid>
+    <match>is powered off</match>
+    <description>VMware ESXi: VM $(vm) on $(esxi_host) was powered off.</description>
+  </rule>
+
+  <rule id="111014" level="8">
+    <if_sid>111010</if_sid>
+    <match>Guest OS shut down</match>
+    <description>VMware ESXi: VM $(vm) on $(esxi_host) was shut down.</description>
+  </rule>
+
+  <rule id="111015" level="8">
+    <if_sid>111010</if_sid>
+    <match>Guest OS reboot</match>
+    <description>VMware ESXi: VM $(vm) on $(esxi_host) was rebooted.</description>
+  </rule>
+
+  <!-- logins, logouts through web console, SSH and scripts -->
+  <rule id="111016" level="7">
+    <if_sid>111010</if_sid>
+    <match>logged in</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) was logged in to $(esxi_host).</description>
+  </rule>
+
+  <rule id="111017" level="3">
+    <if_sid>111010</if_sid>
+    <match>logged out</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) was logged out from $(esxi_host).</description>
+  </rule>
+
+  <rule id="111018" level="8">
+    <if_sid>111010</if_sid>
+    <match>Cannot login</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) was trying to log in to $(esxi_host).</description>
+  </rule>
+
+  <rule id="111019" level="7">
+    <if_sid>111010</if_sid>
+    <match>: SSH session was opened</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) established SSH connection to $(esxi_host).</description>
+  </rule>
+
+  <rule id="111020" level="8">
+    <if_sid>111010</if_sid>
+    <match>: SSH login has failed</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) failed to SSH to $(esxi_host).</description>
+  </rule>
+
+  <rule id="111021" level="3">
+    <if_sid>111010</if_sid>
+    <match>: SSH session was closed</match>
+    <description>VMware ESXi: User $(dstuser) with IP $(srcip) was disconnected from $(esxi_host).</description>
+  </rule>
+
+  <!-- datastore file upload, delete -->
+  <rule id="111022" level="8">
+    <if_sid>111010</if_sid>
+    <match>File upload</match>
+    <description>VMware ESXi: A file in $(path) was uploaded on $(esxi_host).</description>
+  </rule>
+
+  <rule id="111023" level="11">
+    <if_sid>111010</if_sid>
+    <match>Deletion of file or directory</match>
+    <description>VMware ESXi: $(path) in $(disk) was deleted on $(esxi_host).</description>
+  </rule>
+
+  <!-- virtual machine registration and removal -->
+  <rule id="111024" level="5">
+    <if_sid>111010</if_sid>
+    <regex>Registered (\S+) on</regex>
+    <description>VMware ESXi: A new VM $(vm) was registered on $(esxi_host).</description>
+  </rule>
+
+  <rule id="111025" level="8">
+    <if_sid>111010</if_sid>
+    <regex>Removed (\S+) on</regex>
+    <description>VMware ESXi: VM $(vm) was removed from $(esxi_host).</description>
+  </rule>
+
+  <!-- user create, modify and delete -->
+  <rule id="111026" level="8">
+    <if_sid>111010</if_sid>
+    <regex>Account (\S+) was created</regex>
+    <description>VMware ESXi: A new user $(dstuser) was created on $(esxi_host).</description>
+  </rule>
+
+  <rule id="111027" level="11">
+    <if_sid>111010</if_sid>
+    <regex>Account (\S+) was removed</regex>
+    <description>VMware ESXi: User $(dstuser) was deleted from $(esxi_host).</description>
+  </rule>
+
+  <rule id="111028" level="8">
+    <if_sid>111010</if_sid>
+    <match>Password was changed</match>
+    <description>VMware ESXi: Password for User $(dstuser) was changed on $(esxi_host).</description>
+  </rule>
+
+  <!-- shell commands -->
+  <rule id="111029" level="8">
+    <if_sid>111010</if_sid>
+    <regex>shell[(\d+)]: [(\S+)]</regex>
+    <description>VMware ESXi: User $(dstuser) run command $(command) on $(esxi_host) shell.</description>
+  </rule>
+</group>
+
+<!-- shell access -->
+<rule id="111030" level="10">
+  <if_sid>111010</if_sid>
+  <match>Shell access has been enabled</match>
+  <description>VMware ESXi: Shell access was enabled on $(esxi_host).</description>
+</rule>
+
+<rule id="111031" level="5">
+  <if_sid>111010</if_sid>
+  <match>Shell access has been disabled</match>
+  <description>VMware ESXi: Shell access was disabled on $(esxi_host).</description>
+</rule>
+
+<!-- firewall config change -->
+<rule id="111032" level="10">
+  <if_sid>111010</if_sid>
+  <match>firewall configuration has changed</match>
+  <description>VMware ESXi: Firewall settings were modified on $(esxi_host).</description>
+</rule>
+
+<!-- ESXI config changes -->
+<rule id="111032" level="10">
+  <if_sid>111010</if_sid>
+  <match>firewall configuration has changed</match>
+  <description>VMware ESXi: Firewall settings were modified on $(esxi_host).</description>
+</rule>
+
+<!-- license change -->
+<rule id="111034" level="5">
+  <if_sid>111010</if_sid>
+  <match>License was updated</match>
+  <description>VMware ESXi: A license change was made on $(esxi_host).</description>
+</rule>
+
+<!-- multiple failed ssh -->
+<rule id="111035" level="12" frequency="5" timeframe="120">
+  <if_sid>111020</if_sid>
+  <same_source_ip />
+  <description>VMware ESXi: Multiple failed SSH login attempts from $(srcip) to $(esxi_host).</description>
+</rule>
+
+<!-- login outside business hours -->\
+<rule id="111036" level="10">
+  <if_sid>111016</if_sid>
+  <time_range>19:00-07:00</time_range>
+  <description>VMware ESXi: User $(dstuser) logged in to $(esxi_host) during off-hours.</description>
+</rule>
+
+<!-- vMotion VMs migration -->
+<rule id="111037" level="6">
+  <if_sid>111010</if_sid>
+  <match>VM migrated</match>
+  <description>VMware ESXi: VM $(vm) was migrated to another host.</description>
+</rule>
+
+<!-- Snqpshot created or dileted -->
+<rule id="111038" level="6">
+  <if_sid>111010</if_sid>
+  <match>Snapshot created</match>
+  <description>VMware ESXi: Snapshot was created for VM $(vm) on $(esxi_host).</description>
+</rule>
+
+<rule id="111039" level="6">
+  <if_sid>111010</if_sid>
+  <match>Snapshot deleted</match>
+  <description>VMware ESXi: Snapshot was deleted for VM $(vm) on $(esxi_host).</description>
+</rule>
+
+<!-- USB drive detected -->
+<rule id="111040" level="10">
+  <if_sid>111010</if_sid>
+  <match>USB device connected</match>
+  <description>VMware ESXi: A USB device was connected to $(esxi_host).</description>
+</rule>
