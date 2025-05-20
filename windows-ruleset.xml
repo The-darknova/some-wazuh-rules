@@ -8,7 +8,7 @@
 
 <!-- ########## Successful Logon ########## -->
 
-<rule id="100101" level="4">
+<rule id="100101" level="12">
   <if_sid>18107</if_sid>
   <match>Logon Type:\s*2</match>
   <description>Successful Physical Interactive Logon</description>
@@ -18,7 +18,7 @@
   <group>windows,authentication_success,</group>
 </rule>
 
-<rule id="100102" level="12">
+<rule id="100102" level="7">
   <if_sid>18107</if_sid>
   <match>Logon Type:\s*4</match>
   <description>Successful Batch Logon On Behalf Of A User</description>
@@ -83,27 +83,30 @@
 </rule>
 
 <rule id="100108" level="10">
-  <if_sid>18119</if_sid>
-  <description>First time this privileged user logged in this system</description>
+  <if_sid></if_sid>
+  <description>First time this user logged in this system</description>
   <mitre>
     <id>T1078</id>
   </mitre>
   <group>windows,authentication_success,</group>
 </rule>
 
-<rule id="100109" level="10">
-  <if_sid>18119</if_sid>
+
+<!-- ########## Privileged User Successful Logon ########## -->
+
+<!-- 
+<rule id="100109" level="14">
+  <if_sid>18119,100100</if_sid>
   <description>First time this privileged user logged in this system</description>
   <mitre>
     <id>T1078</id>
   </mitre>
   <group>windows,authentication_success,privileged,</group>
 </rule>
+ -->
 
 
-<!-- ########## Privileged User Successful Logon ########## -->
-
-<rule id="100110" level="14">
+<rule id="100110" level="15">
   <if_sid>100101,100100</if_sid>
   <description>Successful Physical Interactive Logon As Privileged User</description>
   <mitre>
@@ -113,7 +116,7 @@
   <group>windows,authentication_success,privileged,</group>
 </rule>
 
-<rule id="100111" level="14">
+<rule id="100111" level="10">
   <if_sid>100102,100100</if_sid>
   <description>Successful Batch Logon On Behalf Of A Privileged User</description>
   <mitre>
@@ -121,7 +124,7 @@
     <id>T1569</id>
     <id>T1053</id>
   </mitre>
-  <group>windows,authentication_success,Privileged,</group>
+  <group>windows,authentication_success,privileged,</group>
 </rule>
 
 <rule id="100112" level="4">
@@ -144,7 +147,7 @@
   <group>windows,authentication_success,privileged,</group>
 </rule>
 
-<rule id="100114" level="14">
+<rule id="100114" level="15">
   <if_sid>100105,100100</if_sid>
   <description>The Admin user's password was passed to the authentication package in cleartext form</description>
   <mitre>
@@ -184,7 +187,7 @@
 </rule>
 
 <!-- ########## Failed Logon ########## -->
-<rule id="100118" level="10">
+<rule id="100118" level="4">
   <if_sid>18107</if_sid> <!-- Event ID 4625 -->
   <description>Windows Failed Logon Attempt</description>
   <mitre>
@@ -194,7 +197,7 @@
 </rule>
 
 <!-- ########## Failed Logon Attempts ########## -->
-<rule id="100119" level="6" frequency="3" timeframe="60" override="false">
+<rule id="100119" level="3" frequency="3" timeframe="60" override="false">
     <if_sid>100115</if_sid>
     <same_user/>
     <description>More than 3 failed login attempts by the same user in 60 seconds</description>
@@ -214,7 +217,7 @@
     <group>authentication_failed, brute_force,</group>
   </rule>
 
-<rule id="100121" level="8" frequency="10" timeframe="60" override="false">
+<rule id="100121" level="12" frequency="10" timeframe="60" override="false">
     <if_sid>100115</if_sid>
     <same_user/>
     <description>More than 10 failed login attempts by the same user in 60 seconds</description>
@@ -224,10 +227,10 @@
     <group>authentication_failed, brute_force,</group>
   </rule>
 
-<rule id="100122" level="12" frequency="12" timeframe="60" override="false">
+<rule id="100122" level="12" frequency="25" timeframe="3600" override="false">
     <if_sid>100115</if_sid>
     <same_user/>
-    <description>More than 12 failed login attempts by the same user in 60 seconds</description>
+    <description>More than 25 failed login attempts by the same user in 60 seconds</description>
     <mitre>
       <id>T1110</id>
     </mitre>
@@ -237,7 +240,7 @@
 
 <!-- #################### Windows Account management Events #################### -->
 
-<rule id="100123" level="13">
+<rule id="100123" level="7">
   <if_sid>18110</if_sid>
   <id>^624$|^4720$</id>
   <description>New User Account Created</description>
@@ -247,7 +250,7 @@
   <group>windows,account_changed,adduser,</group>
 </rule>
 
-<rule id="100124" level="13">
+<rule id="100124" level="12">
   <if_sid>18110</if_sid>
   <id>^626$|^4722$</id>
   <description>User Account Enabled</description>
@@ -257,7 +260,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100125" level="13">
+<rule id="100125" level="9">
   <if_sid>18111</if_sid>
   <id>^628$</id>
   <description>User attempt to reset an account's password</description>
@@ -267,7 +270,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100126" level="13">
+<rule id="100126" level="8">
   <if_sid>18111</if_sid>
   <id>^685$|^4738$|^4781$</id>
   <description>User Account Changed</description>
@@ -277,7 +280,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100127" level="13">
+<rule id="100127" level="12">
   <if_sid>18112</if_sid>
   <id>^630$|^4726$</id>
   <description>User Account deleted.</description>
@@ -287,7 +290,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100128" level="13">
+<rule id="100128" level="7">
   <if_sid>18112</if_sid>
   <id>^629$|^4725$</id>
   <description>User Account disabled.</description>
@@ -297,7 +300,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100129" level="14">
+<rule id="100129" level="15">
   <if_sid>18107</if_sid>
   <match>Group Name:\s*Domain Admins</match>
   <description>User Added to Domain Admins Group</description>
@@ -307,7 +310,7 @@
   <group>windows,privilege_escalation,persistence,</group>
 </rule>
 
-<rule id="100130" level="14">
+<rule id="100130" level="5">
   <if_sid>18127</if_sid>
   <id>^646$|^4742$</id>
   <description>Windows: Computer account changed.</description>
@@ -317,7 +320,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100131" level="14">
+<rule id="100131" level="11">
   <if_sid>18127</if_sid>
   <id>^645$|^4741$</id>
   <description>Windows: Computer account added.</description>
@@ -327,7 +330,7 @@
   <group>windows,account_changed,</group>
 </rule>
 
-<rule id="100132" level="14">
+<rule id="100132" level="12">
   <if_sid>18127</if_sid>
   <id>^647$|^4743$</id>
   <description>Windows: Computer account deleted.</description>
@@ -346,7 +349,7 @@
   <group>windows,log_integrity,</group>
 </rule>
 
-<rule id="100134" level="13">
+<rule id="100134" level="11">
   <if_sid>18107</if_sid>
   <description>Service Installed on System</description>
   <mitre>
