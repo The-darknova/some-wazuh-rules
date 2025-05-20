@@ -1,0 +1,141 @@
+<decoder name="vmware-esxi">
+  <prematch>^vmware-esxi: </prematch>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">\S+ (\d+-\d+-\d+T\d+:\d+:\d+.\d+Z) (\S+) (\S+)\[(\d+)]:</regex>
+  <order>logtimestamp, esxi_host, process_name, process_id</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">\S+ (\d+-\d+-\d+T\d+:\d+:\d+.\d+Z) (\S+) (\S+):</regex>
+  <order>logtimestamp, esxi_host, process_name</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">\S+ (\w+\s\d+\s\d+:\d+\:\d+) (\S+) (\S+)\[(\d+)]:</regex>
+  <order>logtimestamp, esxi_host, process_name, process_id</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">\S+ (\w+\s\d+\s\d+:\d+\:\d+) (\S+) (\S+):</regex>
+  <order>logtimestamp, esxi_host, process_name</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : SSH session was opened for '(\w+)@(\S+)'</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : SSH login has failed for '(\w+)@(\S+)'</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : SSH session was closed for '(\w+)@(\S+)'</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : (\S+) on  (\S+) in (\S+) is powered off</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : (\S+) on (\S+) in (\S+) has powered on</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : User (\w+)@(\S+) logged in</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Cannot login (\w+)@(\S+)</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : User (\w+)@(\S+) logged out</regex>
+  <order>event_id, user, srcip</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">: \[(\S+)]: (.+)$</regex>
+  <order>user, command</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Guest OS shut down for (\S+) on (\S+) in (\S+)</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Guest OS reboot for (\S+) on (\S+) in (\S+)</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Created virtual machine (\S+) on (\S+)</regex>
+  <order>event_id, vm, esxi_host</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Removed (\S+) on (\S+) from (\S+)</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Registered (\S+) on (\S+) in (\S+)</regex>
+  <order>event_id, vm, esxi_host, datacenter</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : File upload to path '\[(.+)' was initiated</regex>
+  <order>event_id, path</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Deletion of file or directory (.+) from (\S+) was initiated</regex>
+  <order>event_id, path, disk</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Account (\S+) was created on host (\S+)</regex>
+  <order>event_id, user, esxi_host</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Password was changed for account (\S+) on host (\S+)</regex>
+  <order>event_id, user, esxi_host</order>
+</decoder>
+
+<decoder name="esxi-syslog">
+  <parent>vmware-esxi</parent>
+  <regex type="pcre2">Event (\d+) : Account (\S+) was removed on host (\S+)</regex>
+  <order>event_id, user, esxi_host</order>
+</decoder>
